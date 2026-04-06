@@ -1,0 +1,46 @@
+flowchart TD
+
+A[Wheel Speed Sensors / Dataset Input<br>(1000 Hz Sampling)]
+
+A --> B[Signal Conditioning<br>Filtering & Normalization]
+
+B --> C[Slip Ratio Calculation<br>λ = (V_vehicle − V_wheel) / V_vehicle]
+
+C --> D[Sliding Window Buffer<br>20 Samples]
+
+D --> E1[Approximate Entropy<br>Computation]
+
+D --> E2[Kurtosis<br>Computation]
+
+D --> E3[Dominant Frequency<br>Estimation]
+
+E1 --> F[Feature Fusion Engine]
+
+E2 --> F
+
+E3 --> F
+
+F --> G[Weighted Lockup Probability<br>(35% Entropy<br>25% Kurtosis<br>40% Frequency)]
+
+G --> H[Predictive Warning<br>Generation]
+
+H --> I[Brake Pressure<br>Modulation Logic]
+
+I --> J[Vehicle Stability<br>Improvement]
+
+%% Color Styling
+
+style A fill:#E3F2FD,stroke:#1E88E5,stroke-width:1px
+style B fill:#E8F5E9,stroke:#43A047,stroke-width:1px
+style C fill:#FFF3E0,stroke:#FB8C00,stroke-width:1px
+style D fill:#F3E5F5,stroke:#8E24AA,stroke-width:1px
+
+style E1 fill:#E1F5FE,stroke:#039BE5
+style E2 fill:#E1F5FE,stroke:#039BE5
+style E3 fill:#E1F5FE,stroke:#039BE5
+
+style F fill:#FFE0B2,stroke:#EF6C00
+style G fill:#FFCDD2,stroke:#C62828
+style H fill:#D1C4E9,stroke:#5E35B1
+style I fill:#C8E6C9,stroke:#2E7D32
+style J fill:#B2DFDB,stroke:#00695C

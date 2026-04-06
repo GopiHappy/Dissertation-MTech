@@ -1,0 +1,53 @@
+flowchart TD
+
+A[Load ABS Dataset<br>(abs_1000hz_dataset.csv)]
+
+A --> B[Data Preprocessing<br>Cleaning and Validation]
+
+B --> C[Compute Slip Ratio<br>for Four Wheels]
+
+C --> D[Create Sliding Window<br>20 Samples]
+
+D --> E[Feature Extraction Stage]
+
+E --> E1[Compute Entropy]
+
+E --> E2[Compute Kurtosis]
+
+E --> E3[Compute Frequency]
+
+E1 --> F[Combine Features]
+
+E2 --> F
+
+E3 --> F
+
+F --> G[Compute Weighted<br>Lockup Probability]
+
+G --> H[Generate Predictive<br>Warnings]
+
+H --> I[Compare with<br>Traditional ABS]
+
+I --> J[Performance Analysis]
+
+J --> K[Visualization and<br>Result Generation]
+
+%% Color Styling
+
+style A fill:#E3F2FD,stroke:#1E88E5
+style B fill:#E8F5E9,stroke:#43A047
+style C fill:#FFF3E0,stroke:#FB8C00
+style D fill:#F3E5F5,stroke:#8E24AA
+
+style E fill:#E1F5FE,stroke:#039BE5
+
+style E1 fill:#E1F5FE,stroke:#039BE5
+style E2 fill:#E1F5FE,stroke:#039BE5
+style E3 fill:#E1F5FE,stroke:#039BE5
+
+style F fill:#FFE0B2,stroke:#EF6C00
+style G fill:#FFCDD2,stroke:#C62828
+style H fill:#D1C4E9,stroke:#5E35B1
+style I fill:#C8E6C9,stroke:#2E7D32
+style J fill:#B2DFDB,stroke:#00695C
+style K fill:#D7CCC8,stroke:#5D4037

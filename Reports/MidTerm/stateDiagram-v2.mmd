@@ -1,0 +1,44 @@
+stateDiagram-v2
+    [*] --> NORMAL
+    
+    NORMAL --> ENTROPY_WARNING: lockup_imminent<br/>(time_to_lockup < 20ms)
+    ENTROPY_WARNING --> NORMAL: entropy > threshold<br/>OR timer > 10ms
+    ENTROPY_WARNING --> PRESSURE_REDUCTION: lockup_probability > 0.8<br/>OR entropy << threshold
+    PRESSURE_REDUCTION --> PRESSURE_HOLD: timer > 20ms
+    PRESSURE_HOLD --> PRESSURE_REAPPLY: slip < 20%<br/>AND stable
+    PRESSURE_REAPPLY --> NORMAL: slip in 10-20%<br/>AND stable for 30ms
+    
+    NORMAL --> FAULT: sensor_failure<br/>OR CRC_error
+    ENTROPY_WARNING --> FAULT: sensor_failure
+    PRESSURE_REDUCTION --> FAULT: solenoid_failure
+    FAULT --> NORMAL: diagnostic_pass<br/>AND manual_reset
+    
+    note right of NORMAL
+        entry / Monitor system
+        State: Normal operation
+    end note
+    
+    note right of ENTROPY_WARNING
+        entry / start_timer(10ms)
+        Early alert state
+    end note
+    
+    note right of PRESSURE_HOLD
+        entry / hold_pressure()
+        Maintain current pressure
+    end note
+    
+    note right of PRESSURE_REDUCTION
+        entry / dump_pressure()
+        Emergency pressure dump
+    end note
+    
+    note right of PRESSURE_REAPPLY
+        entry / start_ramp(50%/s)
+        Gradual pressure increase
+    end note
+    
+    note right of FAULT
+        System Error State
+        Requires diagnostic pass & reset
+    end note
